@@ -6,12 +6,12 @@ Mini-max Tic-Tac-Toe Player
 import ttt_board
 
 # SCORING VALUES
-SCORES = {ttt_board.HUMAN: 1,
+SCORES = {ttt_board.PLAYERX: 1,
           ttt_board.DRAW: 0,
-          ttt_board.COMPUTER: -1}
+          ttt_board.PLAYERO: -1}
 
 
-def mm_move(board, player):
+def get_move(board, player):
     """
     Make a move on the board.
 

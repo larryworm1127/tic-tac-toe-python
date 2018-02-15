@@ -1,16 +1,16 @@
 """
-
+Virtual Tic-Tac-Toe Board
 """
 
 # Constants
 EMPTY = 0
-HUMAN = 1
-COMPUTER = 2
+PLAYERX = 1
+PLAYERO = 2
 DRAW = 3
 
 # Map player constants to letters for printing
-STRMAP = {HUMAN: 'X',
-          COMPUTER: 'O',
+STRMAP = {PLAYERX: 'X',
+          PLAYERO: 'O',
           EMPTY: ' '}
 
 
@@ -138,7 +138,7 @@ def switch_player(player):
 
     Returns other player.
     """
-    if player == HUMAN:
-        return COMPUTER
+    if player == PLAYERX:
+        return PLAYERO
     else:
-        return HUMAN
+        return PLAYERX
