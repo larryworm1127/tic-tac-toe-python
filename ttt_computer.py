@@ -54,3 +54,13 @@ def alpha_beta_pruning_move(board, player, alpha, beta):
             break
 
     return best_score * SCORES[player], best_move
+
+
+def move_wrapper(board, player):
+    """
+    Wrapper to allow the use of the same infrastructure that was used
+    for Monte Carlo Tic-Tac-Toe.
+    """
+    move = get_move(board, player)
+    assert move[1] != (-1, -1), "returned illegal move (-1, -1)"
+    return move[1]
