@@ -14,6 +14,8 @@ BAR_WIDTH = 5
 # Colour constants
 white = (255, 255, 255)
 black = (0, 0, 0)
+green = (0, 200, 0)
+bright_green = (0, 255, 0)
 
 
 class TTTGUI:
@@ -43,6 +45,10 @@ class TTTGUI:
         self.turn = PLAYERX
         self.message = "X Turn!"
 
+    def new_game(self):
+        self.screen.fill(black)
+        game_loop(self.size, self.ai_player, self.ai_function, self.reverse)
+
     def click(self):
         """
         Make human move.
@@ -70,7 +76,7 @@ class TTTGUI:
             self.message = "X Turn!"
 
         if self.in_progress and (self.turn == self.ai_player):
-            row, col = self.ai_function(self.board, self.ai_player, )
+            row, col = self.ai_function(self.board, self.ai_player)
             if self.board.get_square(row, col) == EMPTY:
                 self.board.move(row, col, self.ai_player)
             self.turn = self.human_player
@@ -139,6 +145,10 @@ class TTTGUI:
         """
         Updates the tic-tac-toe GUI.
         """
+        # Draw in new game button
+        self.button_object("New Game", 250, 20, 120, 50, green, bright_green, self.new_game)
+
+        # Draw in bar lines
         for bar_start in range(0, GUI_WIDTH - 1, self.bar_spacing):
             pygame.draw.line(self.screen, black, (bar_start, 100), (bar_start, GUI_HEIGHT), BAR_WIDTH)
             pygame.draw.line(self.screen, black, (0, bar_start + 100), (GUI_WIDTH, bar_start + 100), BAR_WIDTH)
@@ -169,6 +179,24 @@ class TTTGUI:
         self.screen.blit(text_surf, text_rect)
 
         pygame.display.update()
+
+    def button_object(self, text, x, y, width, height, init_color, active_color, action=None):
+        mouse = pygame.mouse.get_pos()
+        click = pygame.mouse.get_pressed()
+
+        if x + width > mouse[0] > x and y + height > mouse[1] > y:
+            pygame.draw.rect(self.screen, active_color, (x, y, width, height))
+
+            if click[0] == 1 and action is not None:
+                action()
+
+        else:
+            pygame.draw.rect(self.screen, init_color, (x, y, width, height))
+
+        font = pygame.font.Font('freesansbold.ttf', 18)
+        text_surf, text_rect = text_objects(text, font)
+        text_rect.center = (310, 45)
+        self.screen.blit(text_surf, text_rect)
 
 
 def text_objects(text, font):
