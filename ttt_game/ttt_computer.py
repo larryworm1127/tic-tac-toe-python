@@ -3,7 +3,7 @@ Mini-max Tic-Tac-Toe Player
 """
 
 # general imports
-import ttt_board
+from ttt_game import ttt_board
 
 # SCORING VALUES
 SCORES = {ttt_board.PLAYERX: 1,

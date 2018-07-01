@@ -1,8 +1,8 @@
 import pygame
 import math
 
-from ttt_board import *
-from ttt_computer import *
+from ttt_game.ttt_board import *
+from ttt_game.ttt_computer import *
 
 pygame.init()
 
