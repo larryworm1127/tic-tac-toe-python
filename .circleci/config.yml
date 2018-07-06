@@ -29,9 +29,7 @@ jobs:
 
       - run:
           name: install dependencies
-          command:
-            - pipenv --python path/to/python
-            - pipenv sync
+          command: pipenv sync
 
       - save_cache:
           paths:
