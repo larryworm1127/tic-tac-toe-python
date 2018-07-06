@@ -11,8 +11,10 @@ Here is a list of features that the program has:
 - Simple and colorful GUI
 
 ## Screenshots
-An empty grid screenshot:
-![Image of Tic Tac Toe](tic_tac_toe_screenshot.png)
+An empty grid screenshot: 
+
+![Image of Tic Tac Toe](screenshots/tic_tac_toe_screenshot.png)
 
 An end game screenshot:
-![Image of Tic Tac Toe](tic_tac_toe_screenshot2.png)
+
+![Image of Tic Tac Toe](screenshots/tic_tac_toe_screenshot2.png)
