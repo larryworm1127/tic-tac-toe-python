@@ -1,8 +1,11 @@
+"""
+GUI module for Tic Tac Toe game
+"""
+
 import pygame
 import math
 
 from ttt_game.ttt_board import *
-from ttt_game.ttt_computer import *
 
 pygame.init()
 
@@ -236,7 +239,3 @@ def game_loop(size, ai_player, ai_function, reverse=False):
 
         pygame.display.update()
         clock.tick(60)
-
-
-if __name__ == '__main__':
-    game_loop(3, PLAYERO, move_wrapper, False)

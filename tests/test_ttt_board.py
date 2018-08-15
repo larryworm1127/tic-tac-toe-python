@@ -1,3 +1,7 @@
+"""
+Test module for ttt_board.py
+"""
+
 # general imports
 from ttt_game.ttt_board import *
 
