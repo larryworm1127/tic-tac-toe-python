@@ -2,6 +2,7 @@
 GUI module for Tic Tac Toe game
 """
 
+# general imports
 import pygame
 import math
 
@@ -27,7 +28,7 @@ class TTTGUI:
     """
 
     def __init__(self, size, ai_player, ai_function, screen, reverse=False):
-        # Game board
+        # game board
         self.size = size
         self.turn = PLAYERX
         self.reverse = reverse
@@ -38,10 +39,10 @@ class TTTGUI:
         self.ai_player = ai_player
         self.ai_function = ai_function
 
-        # Frame setup
+        # frame setup
         self.screen = screen
 
-        # Start new game
+        # start new game
         self.board = TTTBoard(self.size, self.reverse)
         self.in_progress = True
         self.wait = False
@@ -56,16 +57,23 @@ class TTTGUI:
         """
         Make human move.
         """
+        # get mouse position
         mouse_pos = pygame.mouse.get_pos()
 
+        # change status message
         if self.message == "X Turn!":
             self.message = "O Turn!"
 
+        # draw player icon and check win
         if self.in_progress and (self.turn == self.human_player):
             row, col = self.get_grid_from_coords((mouse_pos[0], mouse_pos[1] - 100))
+
+            # only move if the square is empty
             if self.board.get_square(row, col) == EMPTY:
                 self.board.move(row, col, self.human_player)
                 self.turn = self.ai_player
+
+                # check winner
                 winner = self.board.check_win()
                 if winner is not None:
                     self.game_over(winner)
@@ -75,14 +83,20 @@ class TTTGUI:
         """
         Make AI move.
         """
+        # change message
         if self.message == "O Turn!":
             self.message = "X Turn!"
 
+        # draw computer icon and check win
         if self.in_progress and (self.turn == self.ai_player):
             row, col = self.ai_function(self.board, self.ai_player)
+
+            # only move if the square is empty
             if self.board.get_square(row, col) == EMPTY:
                 self.board.move(row, col, self.ai_player)
             self.turn = self.human_player
+
+            # check winner
             winner = self.board.check_win()
             if winner is not None:
                 self.game_over(winner)
@@ -176,26 +190,36 @@ class TTTGUI:
         """
         Displays message onto the screen
         """
+        # set font and draw message onto screen
         font = pygame.font.Font('freesansbold.ttf', 30)
         text_surf, text_rect = text_objects(self.message, font)
         text_rect.center = (100, 50)
         self.screen.blit(text_surf, text_rect)
 
+        # update display
         pygame.display.update()
 
     def button_object(self, text, x, y, width, height, init_color, active_color, action=None):
+        """
+        New game button handler
+        """
+        # get mouse state
         mouse = pygame.mouse.get_pos()
         click = pygame.mouse.get_pressed()
 
+        # change button color when hovered
         if x + width > mouse[0] > x and y + height > mouse[1] > y:
             pygame.draw.rect(self.screen, active_color, (x, y, width, height))
 
+            # check whether the button is clicked or not
             if click[0] == 1 and action is not None:
                 action()
 
+        # switch button color to original
         else:
             pygame.draw.rect(self.screen, init_color, (x, y, width, height))
 
+        # set font for button
         font = pygame.font.Font('freesansbold.ttf', 18)
         text_surf, text_rect = text_objects(text, font)
         text_rect.center = (310, 45)
@@ -214,12 +238,14 @@ def game_loop(size, ai_player, ai_function, reverse=False):
     """
     Main game loop
     """
+    # init pygame variables
     screen = pygame.display.set_mode((GUI_WIDTH, GUI_HEIGHT))
     clock = pygame.time.Clock()
 
     pygame.display.set_caption("Tic Tac Toe")
     gui_class = TTTGUI(size, ai_player, ai_function, screen, reverse)
 
+    # main game loop
     playing = True
     while playing:
         for event in pygame.event.get():
@@ -228,14 +254,18 @@ def game_loop(size, ai_player, ai_function, reverse=False):
                 pygame.quit()
                 quit()
 
+        # set screen background
         screen.fill(white)
         gui_class.draw()
 
+        # set mouse handler
         mouse_press = pygame.mouse.get_pressed()
         if mouse_press[0] == 1:
             gui_class.click()
 
+        # display message
         gui_class.message_display()
 
+        # update screen and clock
         pygame.display.update()
         clock.tick(60)
