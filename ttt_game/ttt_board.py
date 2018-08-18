@@ -2,6 +2,9 @@
 Virtual Tic-Tac-Toe Board
 """
 
+# General imports
+from dataclasses import dataclass, field
+
 # Constants
 EMPTY = 0
 PLAYERX = 1
@@ -14,23 +17,26 @@ STRMAP = {PLAYERX: 'X',
           EMPTY: ' '}
 
 
+@dataclass
 class TTTBoard:
-    def __init__(self, dim, reverse=False, board=None):
-        """
-        Initialize the TTTBoard object with the given dimension and
-        whether or not the game should be reversed.
-        """
-        self._dim = dim
-        self._reverse = reverse
+    _dim: int
+    _reverse: bool = False
+    _custom_board: list = None
+    _board: list = field(init=False)
 
-        if board is None:
+    def __post_init__(self):
+        """
+        Initialize any variables that requires other var to be initialized
+        """
+
+        if self._custom_board is None:
             # Create empty board
-            self._board = [[EMPTY for _ in range(dim)]
-                           for _ in range(dim)]
+            self._board = [[EMPTY for _ in range(self._dim)]
+                           for _ in range(self._dim)]
         else:
             # Copy board grid
-            self._board = [[board[row][col] for col in range(dim)]
-                           for row in range(dim)]
+            self._board = [[self._custom_board[row][col] for col in range(self._dim)]
+                           for row in range(self._dim)]
 
     def __str__(self):
         """

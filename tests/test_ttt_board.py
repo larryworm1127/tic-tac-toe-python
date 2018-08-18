@@ -12,7 +12,7 @@ class TestTTTBoard:
         Test if the clone method works and if the cloned does not get affect by its original board.
         """
         game_board = [[EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         clone_board = board.clone()
 
         for row in range(board.get_dim()):
@@ -44,17 +44,17 @@ class TestTTTBoard:
         Test if check win method recognizes win situations for human.
         """
         game_board = [[PLAYERX, PLAYERX, PLAYERX], [EMPTY, PLAYERO, EMPTY], [PLAYERO, EMPTY, EMPTY]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         state = board.check_win()
         assert PLAYERX == state
 
         game_board = [[PLAYERX, PLAYERO, EMPTY], [PLAYERX, EMPTY, PLAYERO], [PLAYERX, EMPTY, PLAYERO]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         state = board.check_win()
         assert PLAYERX == state
 
         game_board = [[PLAYERX, PLAYERO, EMPTY], [PLAYERO, PLAYERX, EMPTY], [EMPTY, PLAYERO, PLAYERX]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         state = board.check_win()
         assert PLAYERX == state
 
@@ -67,17 +67,17 @@ class TestTTTBoard:
         Test if check win method recognizes win situations for computer.
         """
         game_board = [[PLAYERO, PLAYERO, PLAYERO], [EMPTY, PLAYERX, EMPTY], [PLAYERX, EMPTY, EMPTY]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         state = board.check_win()
         assert PLAYERO == state
 
         game_board = [[PLAYERO, PLAYERX, EMPTY], [PLAYERO, EMPTY, PLAYERX], [PLAYERO, EMPTY, PLAYERX]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         state = board.check_win()
         assert PLAYERO == state
 
         game_board = [[PLAYERO, PLAYERX, EMPTY], [PLAYERX, PLAYERO, EMPTY], [EMPTY, PLAYERX, PLAYERO]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         state = board.check_win()
         assert PLAYERO == state
 
@@ -90,12 +90,12 @@ class TestTTTBoard:
         Test if check win method recognize draw situations.
         """
         game_board = [[PLAYERX, PLAYERO, PLAYERX], [PLAYERO, PLAYERO, PLAYERX], [PLAYERX, PLAYERX, PLAYERO]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         state = board.check_win()
         assert DRAW == state
 
         game_board = [[PLAYERX, PLAYERO, PLAYERX], [PLAYERX, PLAYERO, PLAYERX], [PLAYERO, PLAYERX, PLAYERO]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         state = board.check_win()
         assert DRAW == state
 
@@ -108,11 +108,11 @@ class TestTTTBoard:
         Test if check win method recognize that the game is still playing.
         """
         game_board = [[PLAYERX, PLAYERO, EMPTY], [PLAYERO, EMPTY, PLAYERX], [PLAYERO, EMPTY, EMPTY]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         state = board.check_win()
         assert None is state
 
         game_board = [[PLAYERX, PLAYERO, PLAYERX], [PLAYERO, PLAYERX, EMPTY], [PLAYERO, EMPTY, PLAYERO]]
-        board = TTTBoard(3, board=game_board)
+        board = TTTBoard(3, _custom_board=game_board)
         state = board.check_win()
         assert None is state

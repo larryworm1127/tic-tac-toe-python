@@ -6,8 +6,12 @@ GUI module for Tic Tac Toe game
 import pygame
 import math
 
+from dataclasses import dataclass, field
+from typing import Any
+
 from ttt_game.ttt_board import *
 
+# init pygame
 pygame.init()
 
 # GUI constants
@@ -22,34 +26,41 @@ green = (0, 200, 0)
 bright_green = (0, 255, 0)
 
 
+@dataclass
 class TTTGUI:
     """
     GUI for Tic Tac Toe game.
     """
 
-    def __init__(self, size, ai_player, ai_function, screen, reverse=False):
-        # game board
-        self.size = size
-        self.turn = PLAYERX
-        self.reverse = reverse
+    # variables with passed in values
+    size: int
+    ai_player: int
+    human_player: int
+    ai_function: Any
+    screen: pygame.Surface
+
+    # default game variables
+    reverse: bool = False
+    bar_spacing: int = field(init=False)
+
+    # start new game
+    board: TTTBoard = field(init=False)
+    in_progress: bool = True
+    wait: bool = False
+    turn: int = PLAYERX
+    message: str = "X Turn!"
+
+    def __post_init__(self):
+        """
+        Initialize any variables that requires other var to be initialized
+        """
         self.bar_spacing = GUI_WIDTH // self.size
-
-        # AI setup
-        self.human_player = switch_player(ai_player)
-        self.ai_player = ai_player
-        self.ai_function = ai_function
-
-        # frame setup
-        self.screen = screen
-
-        # start new game
         self.board = TTTBoard(self.size, self.reverse)
-        self.in_progress = True
-        self.wait = False
-        self.turn = PLAYERX
-        self.message = "X Turn!"
 
     def new_game(self):
+        """
+        Run game loop and start new game
+        """
         self.screen.fill(black)
         game_loop(self.size, self.ai_player, self.ai_function, self.reverse)
 
@@ -243,7 +254,7 @@ def game_loop(size, ai_player, ai_function, reverse=False):
     clock = pygame.time.Clock()
 
     pygame.display.set_caption("Tic Tac Toe")
-    gui_class = TTTGUI(size, ai_player, ai_function, screen, reverse)
+    gui_class = TTTGUI(size, ai_player, switch_player(ai_player), ai_function, screen, reverse)
 
     # main game loop
     playing = True
