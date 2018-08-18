@@ -28,7 +28,6 @@ class TTTBoard:
         """
         Initialize any variables that requires other var to be initialized
         """
-
         if self._custom_board is None:
             # Create empty board
             self._board = [[EMPTY for _ in range(self._dim)]
