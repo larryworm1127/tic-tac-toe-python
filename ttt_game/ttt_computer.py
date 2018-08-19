@@ -3,12 +3,12 @@ Mini-max Tic-Tac-Toe Player
 """
 
 # general imports
-from ttt_game import ttt_board
+from .ttt_board import *
 
 # SCORING VALUES
-SCORES = {ttt_board.PLAYERX: 1,
-          ttt_board.DRAW: 0,
-          ttt_board.PLAYERO: -1}
+SCORES = {PLAYERX: 1,
+          DRAW: 0,
+          PLAYERO: -1}
 
 
 def get_move(board, player):
@@ -30,7 +30,7 @@ def alpha_beta_pruning_move(board, player, alpha, beta):
     Returns the score and best move for the current state of the board
     """
     # initialize local variables
-    other_player = ttt_board.switch_player(player)
+    other_player = switch_player(player)
     best_move = (-1, -1)
     best_score = -2
 

@@ -6,10 +6,10 @@ GUI module for Tic Tac Toe game
 import pygame
 import math
 
-from dataclasses import dataclass, field
 from typing import Any
+from dataclasses import dataclass, field
 
-from ttt_game.ttt_board import *
+from .ttt_board import *
 
 # init pygame
 pygame.init()

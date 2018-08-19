@@ -5,6 +5,8 @@ Virtual Tic-Tac-Toe Board
 # General imports
 from dataclasses import dataclass, field
 
+__all__ = ['TTTBoard', 'EMPTY', 'PLAYERX', 'PLAYERO', 'DRAW', 'STRMAP', 'switch_player']
+
 # Constants
 EMPTY = 0
 PLAYERX = 1
@@ -19,6 +21,10 @@ STRMAP = {PLAYERX: 'X',
 
 @dataclass
 class TTTBoard:
+    """
+    A class representing TTT board
+    """
+
     _dim: int
     _reverse: bool = False
     _custom_board: list = None
