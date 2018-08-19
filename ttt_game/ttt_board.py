@@ -4,6 +4,7 @@ Virtual Tic-Tac-Toe Board
 
 # General imports
 from dataclasses import dataclass, field
+from typing import Optional
 
 __all__ = ['TTTBoard', 'EMPTY', 'PLAYERX', 'PLAYERO', 'DRAW', 'STRMAP', 'switch_player']
 
@@ -26,8 +27,8 @@ class TTTBoard:
     """
 
     _dim: int
-    _reverse: bool = False
-    _custom_board: list = None
+    _reverse: Optional[bool] = False
+    _custom_board: Optional[list] = None
     _board: list = field(init=False)
 
     def __post_init__(self):
