@@ -12,8 +12,7 @@ SCORES = {PLAYERX: 1,
 
 
 def get_move(board, player):
-    """
-    Make a move on the board.
+    """Make a move on the board.
 
     Returns a tuple with two elements.  The first element is the score
     of the given board and the second element is the desired move as a
@@ -41,7 +40,8 @@ def alpha_beta_pruning_move(board, player, alpha, beta):
     for move in board.get_empty_squares():
         trial = board.clone()
         trial.move(move[0], move[1], player)
-        score = alpha_beta_pruning_move(trial, other_player, -beta, -max(alpha, best_score))[0]
+        score = alpha_beta_pruning_move(trial, other_player, -beta,
+                                        -max(alpha, best_score))[0]
         alpha = score * SCORES[player]
 
         if alpha == 1:

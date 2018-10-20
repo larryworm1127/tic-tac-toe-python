@@ -6,7 +6,8 @@ Virtual Tic-Tac-Toe Board
 from dataclasses import dataclass, field
 from typing import Optional
 
-__all__ = ['TTTBoard', 'EMPTY', 'PLAYERX', 'PLAYERO', 'DRAW', 'STRMAP', 'switch_player']
+__all__ = ['TTTBoard', 'EMPTY', 'PLAYERX', 'PLAYERO', 'DRAW', 'STRMAP',
+           'switch_player']
 
 # Constants
 EMPTY = 0
@@ -41,8 +42,10 @@ class TTTBoard:
                            for _ in range(self._dim)]
         else:
             # Copy board grid
-            self._board = [[self._custom_board[row][col] for col in range(self._dim)]
-                           for row in range(self._dim)]
+            self._board = [
+                [self._custom_board[row][col] for col in range(self._dim)]
+                for row in range(self._dim)
+            ]
 
     def __str__(self):
         """
@@ -62,8 +65,7 @@ class TTTBoard:
         return rep
 
     def get_dim(self):
-        """
-        Return the dimension of the board
+        """Return the dimension of the board
         """
         return self._dim
 
@@ -75,8 +77,7 @@ class TTTBoard:
         return self._board[row][col]
 
     def get_empty_squares(self):
-        """
-        Return a list of (row, col) tuples for all empty squares
+        """Return a list of (row, col) tuples for all empty squares
         """
         empty = []
         for row in range(self._dim):
@@ -138,15 +139,13 @@ class TTTBoard:
         return None
 
     def clone(self):
-        """
-        Return a copy of the board
+        """Return a copy of the board
         """
         return TTTBoard(self._dim, self._reverse, self._board)
 
 
 def switch_player(player):
-    """
-    Convenience function to switch players.
+    """Convenience function to switch players.
 
     Returns other player.
     """
