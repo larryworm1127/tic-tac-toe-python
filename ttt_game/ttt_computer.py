@@ -1,17 +1,17 @@
 """
 Mini-max Tic-Tac-Toe Player
 """
+from typing import Tuple
 
-# general imports
 from .ttt_board import *
 
-# SCORING VALUES
+# Scoring values
 SCORES = {PLAYERX: 1,
           DRAW: 0,
           PLAYERO: -1}
 
 
-def get_move(board, player):
+def get_move(board: TTTBoard, player: int) -> Tuple[int, int]:
     """Make a move on the board.
 
     Returns a tuple with two elements.  The first element is the score
@@ -21,10 +21,9 @@ def get_move(board, player):
     return alpha_beta_pruning_move(board, player, -2, 2)[1]
 
 
-def alpha_beta_pruning_move(board, player, alpha, beta):
-    """
-    A helper function for mm_move that uses alpha beta pruning to find
-    the best move.
+def alpha_beta_pruning_move(board: TTTBoard, player: int, alpha: int,
+                            beta: int) -> Tuple[int, Tuple[int, int]]:
+    """A helper function for mm_move to find the best move.
 
     Returns the score and best move for the current state of the board.
     """
@@ -37,6 +36,7 @@ def alpha_beta_pruning_move(board, player, alpha, beta):
     if board.check_win() is not None:
         return SCORES[board.check_win()], best_move
 
+    # recursive case
     for move in board.get_empty_squares():
         trial = board.clone()
         trial.move(move[0], move[1], player)

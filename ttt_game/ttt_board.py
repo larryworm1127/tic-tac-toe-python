@@ -1,10 +1,10 @@
 """
 Virtual Tic-Tac-Toe Board
 """
+from __future__ import annotations
 
-# General imports
 from dataclasses import dataclass, field
-from typing import Optional
+from typing import Optional, List, Tuple
 
 __all__ = ['TTTBoard', 'EMPTY', 'PLAYERX', 'PLAYERO', 'DRAW', 'STRMAP',
            'switch_player']
@@ -23,18 +23,21 @@ STRMAP = {PLAYERX: 'X',
 
 @dataclass
 class TTTBoard:
+    """A class representing TTT board.
     """
-    A class representing TTT board
-    """
-
+    # === Private Attributes ===
+    # _dim:
+    #     The dimension of the board.
+    # _custom_board:
+    #     A 2D list representing a pre-made game board to be loaded.
+    # _board:
+    #     A 2D list representing the current game board.
     _dim: int
-    _reverse: Optional[bool] = False
     _custom_board: Optional[list] = None
     _board: list = field(init=False)
 
-    def __post_init__(self):
-        """
-        Initialize any variables that requires other var to be initialized
+    def __post_init__(self) -> None:
+        """Initialize any variables that requires other var to be initialized.
         """
         if self._custom_board is None:
             # Create empty board
@@ -47,9 +50,8 @@ class TTTBoard:
                 for row in range(self._dim)
             ]
 
-    def __str__(self):
-        """
-        Human readable representation of the board.
+    def __str__(self) -> str:
+        """Human readable representation of the board.
         """
         rep = ""
         for row in range(self._dim):
@@ -64,19 +66,18 @@ class TTTBoard:
                 rep += "\n"
         return rep
 
-    def get_dim(self):
+    def get_dim(self) -> int:
         """Return the dimension of the board
         """
         return self._dim
 
-    def get_square(self, row, col):
-        """
-        Returns one of the three constants EMPTY, PLAYERX, or PLAYERO
+    def get_square(self, row: int, col: int) -> int:
+        """Returns one of the three constants EMPTY, PLAYERX, or PLAYERO
         that correspond to the contents of the board at position (row, col).
         """
         return self._board[row][col]
 
-    def get_empty_squares(self):
+    def get_empty_squares(self) -> List[Tuple[int, int]]:
         """Return a list of (row, col) tuples for all empty squares
         """
         empty = []
@@ -87,22 +88,22 @@ class TTTBoard:
 
         return empty
 
-    def move(self, row, col, player):
-        """
-        Place player on the board at position (row, col).
-        player should be either the constant PLAYERX or PLAYERO.
+    def move(self, row: int, col: int, player: int) -> None:
+        """Place player on the board at position (row, col).
+
+        Player should be either the constant PLAYERX or PLAYERO.
         Does nothing if board square is not empty.
         """
         if self._board[row][col] == EMPTY:
             self._board[row][col] = player
 
-    def check_win(self):
-        """
-        Returns a constant associated with the state of the game
-            If PLAYERX wins, returns PLAYERX.
-            If PLAYERO wins, returns PLAYERO.
-            If game is drawn, returns DRAW.
-            If game is in progress, returns None.
+    def check_win(self) -> Optional[int]:
+        """Returns a constant associated with the state of the game
+
+        If PLAYERX wins, returns PLAYERX.
+        If PLAYERO wins, returns PLAYERO.
+        If game is drawn, returns DRAW.
+        If game is in progress, returns None.
         """
         board = self._board
         dim = self._dim
@@ -126,10 +127,7 @@ class TTTBoard:
         # check all lines
         for line in lines:
             if len(set(line)) == 1 and line[0] != EMPTY:
-                if self._reverse:
-                    return switch_player(line[0])
-                else:
-                    return line[0]
+                return line[0]
 
         # no winner, check for draw
         if len(self.get_empty_squares()) == 0:
@@ -138,13 +136,13 @@ class TTTBoard:
         # game is still in progress
         return None
 
-    def clone(self):
+    def clone(self) -> TTTBoard:
         """Return a copy of the board
         """
-        return TTTBoard(self._dim, self._reverse, self._board)
+        return TTTBoard(self._dim, self._board)
 
 
-def switch_player(player):
+def switch_player(player: int) -> int:
     """Convenience function to switch players.
 
     Returns other player.

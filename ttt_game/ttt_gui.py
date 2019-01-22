@@ -1,13 +1,13 @@
 """
 GUI module for Tic Tac Toe game
 """
-
-# General imports
 import pygame
 import math
 
-from typing import Callable, Tuple
+from typing import Callable, Tuple, Optional
 from dataclasses import dataclass, field
+
+from pygame.font import Font
 
 from .ttt_board import *
 
@@ -28,8 +28,7 @@ bright_green = (0, 255, 0)
 
 @dataclass
 class TTTGUI:
-    """
-    GUI for Tic Tac Toe game.
+    """GUI for Tic Tac Toe game.
     """
     # variables with passed in values
     size: int
@@ -39,7 +38,6 @@ class TTTGUI:
     screen: pygame.Surface
 
     # default game variables
-    reverse: bool = False
     bar_spacing: int = field(init=False)
 
     # start new game
@@ -49,19 +47,19 @@ class TTTGUI:
     turn: int = PLAYERX
     message: str = "X Turn!"
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         """Initialize any variables that requires other var to be initialized.
         """
         self.bar_spacing = GUI_WIDTH // self.size
-        self.board = TTTBoard(self.size, self.reverse)
+        self.board = TTTBoard(self.size)
 
-    def new_game(self):
+    def new_game(self) -> None:
         """Run game loop and start new game.
         """
         self.screen.fill(black)
-        game_loop(self.size, self.ai_player, self.ai_function, self.reverse)
+        game_loop(self.size, self.ai_player, self.ai_function)
 
-    def click(self):
+    def click(self) -> None:
         """Make human move.
         """
         # get mouse position
@@ -87,7 +85,7 @@ class TTTGUI:
                     self.game_over(winner)
                 self.wait = True
 
-    def aimove(self):
+    def aimove(self) -> None:
         """Make AI move.
         """
         # change message
@@ -108,7 +106,7 @@ class TTTGUI:
             if winner is not None:
                 self.game_over(winner)
 
-    def game_over(self, winner):
+    def game_over(self, winner: Optional[int]) -> None:
         """Game over.
         """
         # Display winner
@@ -122,12 +120,12 @@ class TTTGUI:
         # Game is no longer in progress
         self.in_progress = False
 
-    def get_message(self):
+    def get_message(self) -> str:
         """Return the in-game message.
         """
         return self.message
 
-    def get_coords_from_grid(self, row, col):
+    def get_coords_from_grid(self, row: int, col: int) -> Tuple[float, float]:
         """Given a grid position in the form (row, col), returns
         the coordinates on the canvas of the center of the grid.
         """
@@ -136,14 +134,15 @@ class TTTGUI:
         return (self.bar_spacing * (col + 1.0 / 2.0),  # x
                 self.bar_spacing * (row + 1.0 / 2.0))  # y
 
-    def get_grid_from_coords(self, position):
+    def get_grid_from_coords(self, position: Tuple[int, int]
+                             ) -> Tuple[int, int]:
         """Given coordinates on a canvas, gets the indices of the grid.
         """
         pos_x, pos_y = position
         return (pos_y // self.bar_spacing,  # row
                 pos_x // self.bar_spacing)  # col
 
-    def drawx(self, pos):
+    def drawx(self, pos: Tuple[float, float]) -> None:
         """Draw an X on the given canvas at the given position.
         """
         half_size = .4 * self.bar_spacing
@@ -154,7 +153,7 @@ class TTTGUI:
                          (pos[0] + half_size, pos[1] - half_size),
                          (pos[0] - half_size, pos[1] + half_size), BAR_WIDTH)
 
-    def drawo(self, pos):
+    def drawo(self, pos: Tuple[float, float]) -> None:
         """Draw an O on the given canvas at the given position.
         """
         half_size = .4 * self.bar_spacing
@@ -162,7 +161,7 @@ class TTTGUI:
                            (math.ceil(pos[0]), math.ceil(pos[1])),
                            math.ceil(half_size), BAR_WIDTH)
 
-    def draw(self):
+    def draw(self) -> None:
         """Updates the tic-tac-toe GUI.
         """
         # Draw in new game button
@@ -192,7 +191,7 @@ class TTTGUI:
         else:
             self.wait = False
 
-    def message_display(self):
+    def message_display(self) -> None:
         """Displays message onto the screen.
         """
         # set font and draw message onto screen
@@ -204,8 +203,15 @@ class TTTGUI:
         # update display
         pygame.display.update()
 
-    def button_object(self, text, x, y, width, height, init_color, active_color,
-                      action=None):
+    def button_object(self,
+                      text: str,
+                      x: float,
+                      y: float,
+                      width: float,
+                      height: float,
+                      init_color: Tuple[int, int, int],
+                      active_color: Tuple[int, int, int],
+                      action: Optional[Callable] = None) -> None:
         """New game button handler.
         """
         # get mouse state
@@ -231,14 +237,15 @@ class TTTGUI:
         self.screen.blit(text_surf, text_rect)
 
 
-def text_objects(text, font):
+def text_objects(text: str, font: Font) -> Tuple:
     """Create a text object given a message and a font.
     """
     text_surface = font.render(text, True, black)
     return text_surface, text_surface.get_rect()
 
 
-def game_loop(size, ai_player, ai_function, reverse=False):
+def game_loop(size: int, ai_player: int,
+              ai_function: Callable[[TTTBoard, int], Tuple[int, int]]) -> None:
     """Main game loop.
     """
     # init pygame variables
@@ -246,8 +253,8 @@ def game_loop(size, ai_player, ai_function, reverse=False):
     clock = pygame.time.Clock()
 
     pygame.display.set_caption("Tic Tac Toe")
-    gui_class = TTTGUI(size, ai_player, switch_player(ai_player), ai_function,
-                       screen, reverse)
+    gui_inst = TTTGUI(size, ai_player, switch_player(ai_player), ai_function,
+                      screen)
 
     # main game loop
     playing = True
@@ -260,15 +267,15 @@ def game_loop(size, ai_player, ai_function, reverse=False):
 
         # set screen background
         screen.fill(white)
-        gui_class.draw()
+        gui_inst.draw()
 
         # set mouse handler
         mouse_press = pygame.mouse.get_pressed()
         if mouse_press[0] == 1:
-            gui_class.click()
+            gui_inst.click()
 
         # display message
-        gui_class.message_display()
+        gui_inst.message_display()
 
         # update screen and clock
         pygame.display.update()

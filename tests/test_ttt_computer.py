@@ -1,13 +1,11 @@
 """
 Test module for ttt_computer.py
 """
-
-# general imports
 from ttt_game.ttt_computer import *
 from ttt_game.ttt_board import *
 
 
-def test_minimax_win_row():
+def test_minimax_win_row() -> None:
     """
     x x o | x o x | o o
       x x |   o o | x x o
@@ -37,7 +35,7 @@ def test_minimax_win_row():
     assert move[1] == 2, "Bad Move Y: " + str(move[1])
 
 
-def test_minimax_win_col():
+def test_minimax_win_col() -> None:
     """
     x     | x o o | o o x
     o o x |     o |   o x
@@ -67,7 +65,7 @@ def test_minimax_win_col():
     assert move[1] == 2, "Bad Move Y: " + str(move[1])
 
 
-def test_minimax_win_diag():
+def test_minimax_win_diag() -> None:
     """
     x x   | o x x
     o o x | x o
@@ -90,7 +88,7 @@ def test_minimax_win_diag():
     assert move[1] == 2, "Bad Move Y: " + str(move[1])
 
 
-def test_minimax_def_row():
+def test_minimax_def_row() -> None:
     """
     x x   | o x   | x o
     x o   | x x   | o
@@ -120,7 +118,7 @@ def test_minimax_def_row():
     assert move[1] == 2, "Bad Move Y: " + str(move[1])
 
 
-def test_minimax_def_col():
+def test_minimax_def_col() -> None:
     """
     x o x | o x o | o o x
     x x o | x x o | x o x
@@ -151,7 +149,7 @@ def test_minimax_def_col():
     assert move[1] == 2, "Bad Move Y: " + str(move[1])
 
 
-def test_minimax_def_diag():
+def test_minimax_def_diag() -> None:
     """
     x o x | o o x
     x x o | x x o

@@ -1,14 +1,11 @@
 """
 Test module for ttt_board.py
 """
-
-# general imports
 from ttt_game.ttt_board import *
 
 
-def test_clone():
-    """Test if the clone method works and if the cloned does not get affect by
-    its original board.
+def test_clone() -> None:
+    """Test clone method and that alias isn't created with original board.
     """
     game_board = [[EMPTY, EMPTY, EMPTY], [EMPTY, EMPTY, EMPTY],
                   [EMPTY, EMPTY, EMPTY]]
@@ -25,7 +22,7 @@ def test_clone():
 
 
 def test_switch_player():
-    """Test if the switch player function works or not.
+    """Test the switch player function.
     """
     player = PLAYERX
     other_player = switch_player(player)
@@ -36,7 +33,7 @@ def test_switch_player():
     assert PLAYERX == other_player
 
 
-def test_check_win_human():
+def test_check_win_human() -> None:
     """
     x x x | x o   | x o
       o   | x   o | o x
@@ -63,7 +60,7 @@ def test_check_win_human():
     assert PLAYERX == state
 
 
-def test_check_win_computer():
+def test_check_win_computer() -> None:
     """
     o o o | o x   | o x
       x   | o   x | x o
@@ -90,7 +87,7 @@ def test_check_win_computer():
     assert PLAYERO == state
 
 
-def test_check_win_draw():
+def test_check_win_draw() -> None:
     """
     x o x | x o x
     o o x | x o x
@@ -111,7 +108,7 @@ def test_check_win_draw():
     assert DRAW == state
 
 
-def test_check_win_playing():
+def test_check_win_playing() -> None:
     """
     x o   | x o x
     o   x | o x
