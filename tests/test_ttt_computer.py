@@ -120,7 +120,7 @@ def test_minimax_def_row():
     assert move[1] == 2, "Bad Move Y: " + str(move[1])
 
 
-def test_minimax_def_col(self):
+def test_minimax_def_col():
     """
     x o x | o x o | o o x
     x x o | x x o | x o x
@@ -151,7 +151,7 @@ def test_minimax_def_col(self):
     assert move[1] == 2, "Bad Move Y: " + str(move[1])
 
 
-def test_minimax_def_diag(self):
+def test_minimax_def_diag():
     """
     x o x | o o x
     x x o | x x o
@@ -173,3 +173,9 @@ def test_minimax_def_diag(self):
     move = get_move(board, PLAYERO)[1]
     assert move[0] == 2, "Bad Move X: " + str(move[0])
     assert move[1] == 0, "Bad Move Y: " + str(move[1])
+
+
+if __name__ == '__main__':
+    import pytest
+
+    pytest.main(['test_ttt_computer.py'])

@@ -18,15 +18,15 @@ def get_move(board, player):
     of the given board and the second element is the desired move as a
     tuple, (row, col).
     """
-    return alpha_beta_pruning_move(board, player, -2, 2)
+    return alpha_beta_pruning_move(board, player, -2, 2)[1]
 
 
 def alpha_beta_pruning_move(board, player, alpha, beta):
     """
     A helper function for mm_move that uses alpha beta pruning to find
-    the best move
+    the best move.
 
-    Returns the score and best move for the current state of the board
+    Returns the score and best move for the current state of the board.
     """
     # initialize local variables
     other_player = switch_player(player)
@@ -54,13 +54,3 @@ def alpha_beta_pruning_move(board, player, alpha, beta):
             break
 
     return best_score * SCORES[player], best_move
-
-
-def move_wrapper(board, player):
-    """
-    Wrapper to allow the use of the same infrastructure that was used
-    for Monte Carlo Tic-Tac-Toe.
-    """
-    move = get_move(board, player)
-    assert move[1] != (-1, -1), "returned illegal move (-1, -1)"
-    return move[1]
